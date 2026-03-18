@@ -6,12 +6,7 @@ from typing import Any, Callable
 
 _LOGGER = logging.getLogger(__name__)
 
-PROCESSORS: dict[str, Callable] = {
-    "hex_to_int": hex_to_int,
-    "multiply": multiply,
-    "divide": divide,
-    "to_type": to_type,
-}
+PROCESSORS: dict[str, Callable] = {}
 
 def processor(func, name: str = None):
     if not name:
@@ -46,6 +41,7 @@ def int_to_hex(value: Any, upper: bool = True) -> str:
     _LOGGER.warning("Failed to convert int to hex, value: %s", value)
     return ''
 
+@processor
 def multiply(value: Any, factor: float | int) -> float | int:
     """Multiply value by factor."""
     try:
@@ -57,6 +53,7 @@ def multiply(value: Any, factor: float | int) -> float | int:
     except (ValueError, TypeError):
         return 0
 
+@processor
 def divide(value: Any, factor: float | int) -> float:
     """Divide value by factor."""
     try:
@@ -66,6 +63,7 @@ def divide(value: Any, factor: float | int) -> float:
     except (ValueError, TypeError):
         return 0.0
 
+@processor
 def to_type(value: Any, target_type: str) -> Any:
     """Convert value to target type."""
     try:
@@ -78,13 +76,6 @@ def to_type(value: Any, target_type: str) -> Any:
     except (ValueError, TypeError):
         pass
     return value
-
-PROCESSORS: dict[str, Callable] = {
-    "hex_to_int": hex_to_int,
-    "multiply": multiply,
-    "divide": divide,
-    "to_type": to_type,
-}
 
 def process_value(value: Any, processor_configs: list[dict[str, Any] | str]) -> Any:
     """
