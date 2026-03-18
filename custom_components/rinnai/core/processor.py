@@ -6,6 +6,22 @@ from typing import Any, Callable
 
 _LOGGER = logging.getLogger(__name__)
 
+PROCESSORS: dict[str, Callable] = {
+    "hex_to_int": hex_to_int,
+    "multiply": multiply,
+    "divide": divide,
+    "to_type": to_type,
+}
+
+def processor(func, name: str = None):
+    if not name:
+        name = func.__name__
+    if name in PROCESSORS:
+        raise Exception("processor with name " + name + " is already defined.")
+    PROCESSORS[name] = func
+    return func
+
+@processor
 def hex_to_int(value: Any, *args) -> int:
     """Convert hex string to integer."""
     if isinstance(value, int):
@@ -19,6 +35,16 @@ def hex_to_int(value: Any, *args) -> int:
             _LOGGER.warning("Failed to convert hex value: %s", value)
             return 0
     return 0
+
+@processor
+def int_to_hex(value: Any, upper: bool = True) -> str:
+    """Convert integer to hex string."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, int):
+        return format(value, 'X' if upper else 'x')
+    _LOGGER.warning("Failed to convert int to hex, value: %s", value)
+    return ''
 
 def multiply(value: Any, factor: float | int) -> float | int:
     """Multiply value by factor."""

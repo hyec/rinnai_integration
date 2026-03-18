@@ -1,7 +1,7 @@
 {
-    "name": "Rinnai Boiler E51",
+    "name": "Rinnai Heater E51",
     "features": {
-        "heat_type": "G51_HEAT_OVEN",
+        "heat_type": "E51_WATER_HEATER",
         "gas_consumption_digits": 8,
         "energy_data_keys": [
             "gasUsed",
@@ -32,7 +32,13 @@
     ],
     "processors": {
         "hotWaterTempSetting": [
-            "hex_to_int"
+            "hex_to_int",
+            {
+                "func": "divide",
+                "args": [
+                    256
+                ]
+            }
         ],
         "heatingTempSettingNM": [
             "hex_to_int"
@@ -96,11 +102,20 @@
                 "name": "热水器",
                 "key": "main",
                 "min_temp": 35,
-                "max_temp": 65,
+                "max_temp": 60,
                 "step": 1,
                 "command_topic": "hotWaterTempSetting",
                 "state_attribute": "hot_water_temp",
-                "operation_mode": "Hot Water"
+                "operation_mode": "Hot Water",
+                "processors": [
+                    {
+                        "func": "multiply",
+                        "args": [
+                            256
+                        ]
+                    },
+                    "int_to_hex"
+                ]
             }
         ],
         "climate": [

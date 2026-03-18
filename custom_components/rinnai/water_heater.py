@@ -16,6 +16,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import DOMAIN
 from .coordinator import RinnaiCoordinator
 from .entity import RinnaiEntity
+from .core.processor import process_value
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,6 +65,8 @@ class RinnaiWaterHeaterEntity(RinnaiEntity, WaterHeaterEntity):
         self._attr_operation_list = [operation_mode]
         self._attr_current_operation = operation_mode
 
+        self._processors = config.get("processors", ["int_to_hex"])
+
         self._update_attributes()
 
     @callback
@@ -97,8 +100,8 @@ class RinnaiWaterHeaterEntity(RinnaiEntity, WaterHeaterEntity):
         if temperature < self.min_temp or temperature > self.max_temp:
             return
 
-        hex_temperature = hex(temperature)[2:].upper()
-        command = {self._command_topic: hex_temperature}
+        processed_temperature = process_value(temperature, self._processors)
+        command = {self._command_topic: processed_temperature}
 
         success = await self.coordinator.async_send_command(self._device_id, command)
 
