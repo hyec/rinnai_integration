@@ -15,6 +15,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 from .coordinator import RinnaiCoordinator
+from .core.processor import process_value
 from .entity import RinnaiEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -67,6 +68,8 @@ class RinnaiWaterHeaterEntity(RinnaiEntity, WaterHeaterEntity):
         operation_mode = config.get("operation_mode", "Hot Water")
         self._attr_operation_list = [operation_mode]
         self._attr_current_operation = operation_mode
+
+        self._processors = config.get("processors", ["int_to_hex"])
 
         self._update_attributes()
 
