@@ -1,9 +1,11 @@
 {
     "name": "Rinnai Heater E51",
     "features": {
-        "heat_type": "E51_WATER_HEATER",
+        "heat_type": "E51_HOT_WATER",
         "gas_consumption_digits": 8,
         "energy_data_keys": [
+            "burningState",
+            "temporaryCycleInsulationSetting",
             "gasUsed",
             "supplyTime",
             "totalPowerSupplyTime",
@@ -31,12 +33,51 @@
         "save_schedule"
     ],
     "processors": {
+        "burningState": [
+            "hex_to_int"
+        ],
         "hotWaterTempSetting": [
             "hex_to_int",
             {
                 "func": "divide",
                 "args": [
                     256
+                ]
+            }
+        ],
+        "tempSettingUpper": [
+            "hex_to_int",
+            {
+                "func": "divide",
+                "args": [
+                    256
+                ]
+            }
+        ],
+        "tempSettinglower": [
+            "hex_to_int",
+            {
+                "func": "divide",
+                "args": [
+                    256
+                ]
+            }
+        ],
+        "temporaryCycleInsulationSetting": [
+            "hex_to_int",
+            {
+                "func": "bit_or",
+                "args": [
+                    1
+                ]
+            }
+        ],
+        "power": [
+            "hex_to_int",
+            {
+                "func": "bit_or",
+                "args": [
+                    1
                 ]
             }
         ],
@@ -81,6 +122,8 @@
         ]
     },
     "state_mapping": {
+
+        
         "hot_water_temp": "hotWaterTempSetting",
         "heating_temp_nm": "heatingTempSettingNM",
         "heating_temp_hes": "heatingTempSettingHES",

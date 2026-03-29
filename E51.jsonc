@@ -1,0 +1,79 @@
+{
+    "ptn": "J00",
+    "code": "FFFF",
+    "id": "0272000D",
+    "enl": [
+        // 燃烧状态 0, 1
+        {
+            "id": "burningState",
+            "data": "0"
+        },
+        // 错误代码 
+        {
+            "id": "errorCode",
+            "data": "0"
+        },
+        // 错误类型
+        {
+            "id": "errorType",
+            "data": "0"
+        },
+        // 温度
+        {
+            "id": "hotWaterTempSetting",
+            "data": "3200"
+        },
+        // 最高温度
+        {
+            "id": "tempSettingUpper",
+            "data": "3c00"
+        },
+        // 最低温度
+        {
+            "id": "tempSettinglower",
+            "data": "2300"
+        },
+        // 冰冻状态
+        {
+            "id": "frozenState",
+            "data": "30"
+        },
+        // 电源 31 30
+        {
+            "id": "power",
+            "data": "31"
+        },
+        // 节能开关
+        {
+            "id": "ecoMode",
+            "data": "30"
+        },
+        // 节能模式 5a-一般节能, 50 标准节能 45 强力节能
+        {
+            "id": "ecoHeatLoad",
+            "data": "46"
+        },
+        // 一键循环 30 31
+        {
+            "id": "temporaryCycleInsulationSetting",
+            "data": "30"
+        },
+        // 循环预约开关 
+        {
+            "id": "cycleModeSetting",
+            "data": "1"
+        },
+        // 增压模式 30 31
+        {
+            "id": "pressurizationMode",
+            "data": "30"
+        },
+        // 模式选择 0-普通模式 1-厨房模式 2-淋浴模式
+        {
+            "id": "operationMode",
+            "data": "0"
+        }
+    ],
+    "It": "2026-03-28T21:52:52+08:00",
+    "sum": 14
+}

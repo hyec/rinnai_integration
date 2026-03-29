@@ -77,6 +77,13 @@ def to_type(value: Any, target_type: str) -> Any:
         pass
     return value
 
+@processor
+def bit_or(value: int, right: int) -> int:
+    try:
+        return int(value) | right
+    except (ValueError, TypeError):
+        return 0
+
 def process_value(value: Any, processor_configs: list[dict[str, Any] | str]) -> Any:
     """
     Process a single value through a chain of processors.

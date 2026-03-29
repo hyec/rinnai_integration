@@ -84,6 +84,8 @@ class RinnaiHeatingClimateEntity(RinnaiEntity, ClimateEntity):
         # Current internal mode key
         self._current_mode = self._off_mode
 
+        self._processors = config.get('processors', [])
+
         self._update_attributes()
 
     @callback
